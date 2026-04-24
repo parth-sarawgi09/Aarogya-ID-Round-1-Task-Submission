@@ -24,14 +24,17 @@ app = FastAPI(
 )
 
 # CORS configuration
+# In production, you can restrict this to your Vercel frontend URL via FRONTEND_URL env var
+frontend_url = os.getenv("FRONTEND_URL", "*")
 origins = [
     "http://localhost:5173", # Vite default port
     "http://localhost:3000", # React default port
+    frontend_url
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"] if frontend_url == "*" else origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

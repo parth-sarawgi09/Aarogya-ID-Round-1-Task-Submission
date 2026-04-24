@@ -1,0 +1,22 @@
+services:
+  # Backend Service (FastAPI)
+  - type: web
+    name: aarogya-aid-backend
+    env: python
+    region: singapore # You can change this
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: MONGODB_URI
+        sync: false # You must set this in Render dashboard
+      - key: MONGO_DB_NAME
+        value: aarogya_aid
+      - key: GROQ_API_KEY
+        sync: false # You must set this in Render dashboard
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false # You must set this in Render dashboard
